@@ -1,7 +1,8 @@
 import { mapFieldName } from "~/config/constants";
-import { CSVColsDef, CSVRowData } from "~/models/csv-file-schema";
+import { Claim } from "~/models/claims-data-type";
+import { CSVColsDef, CSVRowData } from "~/models/csv-schema";
 
-export function formatRowData(rowData: CSVRowData[]): Record<string, string>[] {
+export function formatRowData(rowData: CSVRowData[]): Claim[] {
   const fieldNames = Object.values(mapFieldName);
   const result = [];
 

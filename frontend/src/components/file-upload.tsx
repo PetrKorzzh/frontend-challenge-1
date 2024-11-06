@@ -1,15 +1,20 @@
 import { Button, FileInput, Stack } from "@mantine/core";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
-import { getCsvInputSchema } from "~/models/csv-file-schema";
+import { getCsvInputSchema } from "~/models/csv-schema";
+import { claimStore } from "~/stores/claims-store";
 import { formatZodErrors } from "~/utlils/format-errors";
 
-export const FileUpload = ({ onUpload, fileType }: { onUpload: (file: File) => void; fileType: string }) => {
+export const FileUpload = observer(({ onUpload, fileType }: { onUpload: (file: File) => void; fileType: string }) => {
   const [value, setValue] = useState<File | null>(null);
   const [fieldError, setFieldError] = useState<string>(null);
 
   const handleOnChange = (file: File) => {
     setValue(file);
     setFieldError(null);
+    claimStore.setColDefs(null);
+    claimStore.setRowData(null);
+    claimStore.setParseError(null);
   };
 
   const handleFileUpload = () => {
@@ -29,4 +34,4 @@ export const FileUpload = ({ onUpload, fileType }: { onUpload: (file: File) => v
       <Button onClick={() => handleFileUpload()}>Upload CSV</Button>
     </Stack>
   );
-};
+});
